@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDev Components Library</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="utilities.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>WebDev Components Library</h1>
+            <button id="theme-toggle" class="theme-toggle">🌙 Dark Mode</button>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#dropdowns">Dropdowns</a></li>
+            <li><a href="#sliders">Sliders</a></li>
+            <li><a href="#alerts">Alerts</a></li>
+            <li><a href="#cards">Cards</a></li>
+            <li><a href="#modals">Modals</a></li>
+            <li><a href="#forms">Forms</a></li>
+            <li><a href="#tables">Tables</a></li>
+            <li><a href="#navigation">Navigation</a></li>
+            <li><a href="#loaders">Loaders</a></li>
+            <li><a href="#python">Python Overview</a></li>
+            <li><a href="#python-encryption">Password Encryption</a></li>
+            <li><a href="#python-flask">Flask Components</a></li>
+            <li><a href="#python-django">Django Components</a></li>
+            <li><a href="#python-gui">GUI Components</a></li>
+            <li><a href="#python-keyring">System Keyring</a></li>
+            <li><a href="#database">Database</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Buttons Section -->
+        <section id="buttons" class="component-section">
+            <h2>Buttons</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <div class="button-group">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-secondary">Secondary Button</button>
+                    <button class="btn btn-success">Success Button</button>
+                    <button class="btn btn-danger">Danger Button</button>
+                    <button class="btn btn-outline">Outline Button</button>
+                    <button class="btn btn-link">Link Button</button>
+                </div>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Button Type: 
+                    <select id="button-type">
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="success">Success</option>
+                        <option value="danger">Danger</option>
+                        <option value="outline">Outline</option>
+                        <option value="link">Link</option>
+                    </select>
+                </label>
+                
+                <label>Button Size: 
+                    <select id="button-size">
+                        <option value="">Normal</option>
+                        <option value="btn-small">Small</option>
+                        <option value="btn-large">Large</option>
+                    </select>
+                </label>
+                
+                <label>Button Text: 
+                    <input type="text" id="button-text" value="Click Me">
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="button-code">&lt;button class="btn btn-primary"&gt;Primary Button&lt;/button&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('button-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Dropdowns Section -->
+        <section id="dropdowns" class="component-section">
+            <h2>Dropdowns</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <div class="dropdown">
+                    <button class="dropbtn">Dropdown 
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Dropdown Position: 
+                    <select id="dropdown-position">
+                        <option value="bottom-left">Bottom Left</option>
+                        <option value="bottom-right">Bottom Right</option>
+                        <option value="top-left">Top Left</option>
+                        <option value="top-right">Top Right</option>
+                    </select>
+                </label>
+                
+                <label>Dropdown Color: 
+                    <input type="color" id="dropdown-color" value="#007bff">
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="dropdown-code">&lt;div class="dropdown"&gt;
+  &lt;button class="dropbtn"&gt;Dropdown 
+    &lt;span class="arrow"&gt;▼&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="dropdown-content"&gt;
+    &lt;a href="#"&gt;Link 1&lt;/a&gt;
+    &lt;a href="#"&gt;Link 2&lt;/a&gt;
+    &lt;a href="#"&gt;Link 3&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('dropdown-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Sliders Section -->
+        <section id="sliders" class="component-section">
+            <h2>Sliders</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+                <p>Value: <span id="slider-value">50</span></p>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Min Value: 
+                    <input type="number" id="slider-min" value="0" min="0" max="100">
+                </label>
+                
+                <label>Max Value: 
+                    <input type="number" id="slider-max" value="100" min="0" max="1000">
+                </label>
+                
+                <label>Initial Value: 
+                    <input type="number" id="slider-initial" value="50" min="0" max="100">
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="slider-code">&lt;input type="range" min="0" max="100" value="50" class="slider" id="myRange"&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('slider-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Alerts Section -->
+        <section id="alerts" class="component-section">
+            <h2>Alerts</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <div class="alert alert-info">
+                    <strong>Info!</strong> This is an info alert.
+                </div>
+                <div class="alert alert-success">
+                    <strong>Success!</strong> This is a success alert.
+                </div>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> This is a warning alert.
+                </div>
+                <div class="alert alert-danger">
+                    <strong>Danger!</strong> This is a danger alert.
+                </div>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Alert Type: 
+                    <select id="alert-type">
+                        <option value="info">Info</option>
+                        <option value="success">Success</option>
+                        <option value="warning">Warning</option>
+                        <option value="danger">Danger</option>
+                    </select>
+                </label>
+                
+                <label>Alert Message: 
+                    <input type="text" id="alert-message" value="This is an alert message">
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="alert-code">&lt;div class="alert alert-info"&gt;&lt;strong&gt;Info!&lt;/strong&gt; This is an info alert.&lt;/div&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('alert-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Cards Section -->
+        <section id="cards" class="component-section">
+            <h2>Cards</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <div class="card">
+                    <div class="card-header">
+                        Card Header
+                    </div>
+                    <div class="card-body">
+                        <h5>Card Title</h5>
+                        <p>This is a sample card with some content.</p>
+                    </div>
+                    <div class="card-footer">
+                        Card Footer
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Card Title: 
+                    <input type="text" id="card-title" value="Card Title">
+                </label>
+                
+                <label>Card Content: 
+                    <textarea id="card-content">This is a sample card with some content.</textarea>
+                </label>
+                
+                <label>Card Width: 
+                    <input type="range" id="card-width" min="200" max="500" value="300">
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="card-code">&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;Card Header&lt;/div&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5&gt;Card Title&lt;/h5&gt;
+    &lt;p&gt;This is a sample card with some content.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="card-footer"&gt;Card Footer&lt;/div&gt;
+&lt;/div&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('card-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Modals Section -->
+        <section id="modals" class="component-section">
+            <h2>Modals</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <button id="open-modal-btn" class="btn btn-primary">Open Modal</button>
+                
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Modal Header</h2>
+                        <p>This is a modal dialog box.</p>
+                        <button class="btn btn-primary">Close</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Modal Title: 
+                    <input type="text" id="modal-title" value="Modal Header">
+                </label>
+                
+                <label>Modal Content: 
+                    <textarea id="modal-content">This is a modal dialog box.</textarea>
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="modal-code">&lt;!-- Modal Trigger --&gt;
+&lt;button id="open-modal-btn" class="btn btn-primary"&gt;Open Modal&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div id="modal" class="modal"&gt;
+  &lt;div class="modal-content"&gt;
+    &lt;span class="close"&gt;&amp;times;&lt;/span&gt;
+    &lt;h2&gt;Modal Header&lt;/h2&gt;
+    &lt;p&gt;This is a modal dialog box.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('modal-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Forms Section -->
+        <section id="forms" class="component-section">
+            <h2>Forms</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <form class="form-container">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" placeholder="Enter your message"></textarea>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" name="subscribe"> Subscribe to newsletter
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Form Layout: 
+                    <select id="form-layout">
+                        <option value="vertical">Vertical</option>
+                        <option value="horizontal">Horizontal</option>
+                    </select>
+                </label>
+                
+                <label>Input Border Radius: 
+                    <input type="range" id="input-radius" min="0" max="20" value="4">
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="form-code">&lt;form class="form-container"&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="name"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name" placeholder="Enter your name"&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="form-group"&gt;
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" placeholder="Enter your email"&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="form-group"&gt;
+    &lt;label for="password"&gt;Password:&lt;/label&gt;
+    &lt;input type="password" id="password" name="password" placeholder="Enter your password"&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="form-group"&gt;
+    &lt;label for="message"&gt;Message:&lt;/label&gt;
+    &lt;textarea id="message" name="message" placeholder="Enter your message"&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="form-group checkbox-group"&gt;
+    &lt;label&gt;
+      &lt;input type="checkbox" name="subscribe"&gt; Subscribe to newsletter
+    &lt;/label&gt;
+  &lt;/div&gt;
+  
+  &lt;button type="submit" class="btn btn-primary"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('form-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Tables Section -->
+        <section id="tables" class="component-section">
+            <h2>Tables</h2>
+            
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>John Doe</td>
+                            <td>john@example.com</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jane Smith</td>
+                            <td>jane@example.com</td>
+                            <td>Inactive</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Bob Johnson</td>
+                            <td>bob@example.com</td>
+                            <td>Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Table Style: 
+                    <select id="table-style">
+                        <option value="striped">Striped</option>
+                        <option value="bordered">Bordered</option>
+                        <option value="hover">Hover</option>
+                        <option value="compact">Compact</option>
+                    </select>
+                </label>
+                
+                <label>Show Actions Column: 
+                    <input type="checkbox" id="table-actions">
+                </label>
+            </div>
+            
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="table-code">&lt;table class="data-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;John Doe&lt;/td&gt;
+      &lt;td&gt;john@example.com&lt;/td&gt;
+      &lt;td&gt;Active&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;Jane Smith&lt;/td&gt;
+      &lt;td&gt;jane@example.com&lt;/td&gt;
+      &lt;td&gt;Inactive&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;Bob Johnson&lt;/td&gt;
+      &lt;td&gt;bob@example.com&lt;/td&gt;
+      &lt;td&gt;Active&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('table-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Navigation Section -->
+        <section id="navigation" class="component-section">
+            <h2>Navigation</h2>
+
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <nav class="navbar">
+                    <div class="nav-brand">Logo</div>
+                    <ul class="nav-menu">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Nav Background:
+                    <input type="color" id="nav-bg" value="#333333">
+                </label>
+
+                <label>Nav Text Color:
+                    <input type="color" id="nav-text" value="#ffffff">
+                </label>
+
+                <label>Nav Layout:
+                    <select id="nav-layout">
+                        <option value="horizontal">Horizontal</option>
+                        <option value="vertical">Vertical</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="nav-code">&lt;nav class="navbar"&gt;
+  &lt;div class="nav-brand"&gt;Logo&lt;/div&gt;
+  &lt;ul class="nav-menu"&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Services&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div class="hamburger"&gt;
+    &lt;span&gt;&lt;/span&gt;
+    &lt;span&gt;&lt;/span&gt;
+    &lt;span&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('nav-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Loaders Section -->
+        <section id="loaders" class="component-section">
+            <h2>Loaders & Spinners</h2>
+
+            <div class="component-preview">
+                <h3>Preview</h3>
+                <div class="loader-container">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Loading...</div>
+                </div>
+
+                <div class="loader-container">
+                    <div class="dots-loader">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Loader Type:
+                    <select id="loader-type">
+                        <option value="spinner">Spinner</option>
+                        <option value="dots">Dots</option>
+                        <option value="bars">Bars</option>
+                    </select>
+                </label>
+
+                <label>Loader Color:
+                    <input type="color" id="loader-color" value="#007bff">
+                </label>
+
+                <label>Loader Size:
+                    <input type="range" id="loader-size" min="20" max="100" value="40">
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="loader-code">&lt;div class="spinner"&gt;&lt;/div&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('loader-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Python Components Section -->
+        <section id="python" class="component-section">
+            <h2>Python Components</h2>
+
+            <div class="component-preview">
+                <h3>Python Development Components</h3>
+                <p>Comprehensive Python components for various use cases:</p>
+                <ul>
+                    <li>Password Encryption (SHA256, bcrypt)</li>
+                    <li>Web Servers (Flask, Django)</li>
+                    <li>GUI Applications (Tkinter, CustomTkinter)</li>
+                    <li>System Keyring Integration</li>
+                    <li>And much more...</li>
+                </ul>
+
+                <h4>Quick Example: Password Hashing</h4>
+                <pre class="code-block"># Using bcrypt for password hashing
+import bcrypt
+
+def hash_password(password):
+    # Convert password to bytes
+    password_bytes = password.encode('utf-8')
+
+    # Generate salt and hash password
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password_bytes, salt)
+
+    return hashed
+
+def verify_password(password, hashed):
+    password_bytes = password.encode('utf-8')
+    return bcrypt.checkpw(password_bytes, hashed)
+
+# Example usage
+password = "my_secure_password"
+hashed = hash_password(password)
+print(f"Password verified: {verify_password('my_secure_password', hashed)}")</pre>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Component Type:
+                    <select id="python-component-type">
+                        <option value="encryption">Password Encryption</option>
+                        <option value="flask">Flask Web Server</option>
+                        <option value="django">Django Components</option>
+                        <option value="gui">GUI Components</option>
+                        <option value="keyring">System Keyring</option>
+                    </select>
+                </label>
+
+                <label>Python Version:
+                    <select id="python-version">
+                        <option value="3.8">3.8+</option>
+                        <option value="3.9">3.9+</option>
+                        <option value="3.10">3.10+</option>
+                        <option value="3.11">3.11+</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="python-code"># Python component code will appear here</pre>
+                <button class="copy-btn" onclick="copyCode('python-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Python Password Encryption Section -->
+        <section id="python-encryption" class="component-section">
+            <h2>Python Password Encryption</h2>
+
+            <div class="component-preview">
+                <h3>Secure Password Handling with SHA256 and bcrypt</h3>
+                <p>Best practices for password encryption in Python applications:</p>
+
+                <h4>SHA256 Hashing</h4>
+                <pre class="code-block">import hashlib
+
+def hash_sha256(password):
+    """Hash a password using SHA256"""
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+# Example usage
+password = "my_secure_password"
+hashed = hash_sha256(password)
+print(f"SHA256 hash: {hashed}")</pre>
+
+                <h4>Bcrypt Hashing (Recommended)</h4>
+                <pre class="code-block">import bcrypt
+
+def hash_bcrypt(password):
+    """Hash a password using bcrypt with salt"""
+    password_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password_bytes, salt)
+
+def verify_bcrypt(password, hashed):
+    """Verify a password against a bcrypt hash"""
+    password_bytes = password.encode('utf-8')
+    return bcrypt.checkpw(password_bytes, hashed)
+
+# Example usage
+password = "my_secure_password"
+hashed = hash_bcrypt(password)
+is_valid = verify_bcrypt("my_secure_password", hashed)
+print(f"Password verified: {is_valid}")</pre>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Algorithm:
+                    <select id="encryption-algorithm">
+                        <option value="sha256">SHA256</option>
+                        <option value="bcrypt">bcrypt</option>
+                        <option value="combined">SHA256 + Salt</option>
+                    </select>
+                </label>
+
+                <label>Include Verification:
+                    <input type="checkbox" id="include-verification" checked>
+                </label>
+
+                <label>Custom Password:
+                    <input type="text" id="custom-password" value="my_secure_password">
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="encryption-code"># Password encryption code will appear here</pre>
+                <button class="copy-btn" onclick="copyCode('encryption-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Python Flask Section -->
+        <section id="python-flask" class="component-section">
+            <h2>Python Flask Components</h2>
+
+            <div class="component-preview">
+                <h3>Flask Web Application Components</h3>
+                <p>Complete Flask application with authentication and API endpoints:</p>
+
+                <pre class="code-block">from flask import Flask, request, jsonify
+import os
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return {'message': 'Welcome to the Flask API!'}
+
+@app.route('/api/data', methods=['GET'])
+def get_data():
+    # Example endpoint returning JSON data
+    return jsonify({'data': 'This is sample data'})
+
+@app.route('/api/data', methods=['POST'])
+def post_data():
+    data = request.get_json()
+    # Process the received data
+    return jsonify({'received': data, 'status': 'success'}), 201
+
+if __name__ == '__main__':
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)</pre>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>App Name:
+                    <input type="text" id="flask-app-name" value="MyFlaskApp">
+                </label>
+
+                <label>Include Auth:
+                    <input type="checkbox" id="flask-include-auth">
+                </label>
+
+                <label>Database Integration:
+                    <select id="flask-db-type">
+                        <option value="none">None</option>
+                        <option value="sqlite">SQLite</option>
+                        <option value="postgres">PostgreSQL</option>
+                        <option value="mysql">MySQL</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="flask-code"># Flask code will appear here</pre>
+                <button class="copy-btn" onclick="copyCode('flask-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Python Django Section -->
+        <section id="python-django" class="component-section">
+            <h2>Python Django Components</h2>
+
+            <div class="component-preview">
+                <h3>Django Web Framework Components</h3>
+                <p>Essential Django components for web applications:</p>
+
+                <h4>Models Example</h4>
+                <pre class="code-block">from django.db import models
+
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name</pre>
+
+                <h4>Views Example</h4>
+                <pre class="code-block">from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views import View
+import json
+
+from .models import Item
+
+@method_decorator(csrf_exempt, name='dispatch')
+class ItemListView(View):
+    def get(self, request):
+        items = Item.objects.all().values()
+        return JsonResponse(list(items), safe=False)
+
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            item = Item.objects.create(
+                name=data['name'],
+                description=data.get('description', '')
+            )
+            return JsonResponse({
+                'id': item.id,
+                'name': item.name,
+                'description': item.description
+            }, status=201)
+        except (json.JSONDecodeError, KeyError):
+            return JsonResponse({'error': 'Invalid data'}, status=400)</pre>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Model Name:
+                    <input type="text" id="django-model-name" value="Item">
+                </label>
+
+                <label>Include User Auth:
+                    <input type="checkbox" id="django-user-auth" checked>
+                </label>
+
+                <label>API Type:
+                    <select id="django-api-type">
+                        <option value="class">Class-Based Views</option>
+                        <option value="function">Function-Based Views</option>
+                        <option value="drf">Django REST Framework</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="django-code"># Django code will appear here</pre>
+                <button class="copy-btn" onclick="copyCode('django-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Python GUI Section -->
+        <section id="python-gui" class="component-section">
+            <h2>Python GUI Components</h2>
+
+            <div class="component-preview">
+                <h3>Tkinter and CustomTkinter GUI Components</h3>
+                <p>Create desktop applications with Python GUI frameworks:</p>
+
+                <h4>Basic Tkinter Window</h4>
+                <pre class="code-block">import tkinter as tk
+from tkinter import ttk
+
+class App:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("My Application")
+        self.root.geometry("400x300")
+
+        # Create a label
+        label = ttk.Label(self.root, text="Hello, World!")
+        label.pack(pady=20)
+
+        # Create a button
+        button = ttk.Button(self.root, text="Click Me", command=self.button_click)
+        button.pack(pady=10)
+
+    def button_click(self):
+        print("Button clicked!")
+
+    def run(self):
+        self.root.mainloop()
+
+# Run the application
+if __name__ == "__main__":
+    app = App()
+    app.run()</pre>
+
+                <h4>Modern CustomTkinter Interface</h4>
+                <pre class="code-block">import customtkinter as ctk
+
+class ModernApp:
+    def __init__(self):
+        # Set appearance mode and color theme
+        ctk.set_appearance_mode("dark")
+        ctk.set_default_color_theme("blue")
+
+        self.root = ctk.CTk()
+        self.root.title("Modern Application")
+        self.root.geometry("500x400")
+
+        # Create a frame
+        self.frame = ctk.CTkFrame(master=self.root)
+        self.frame.pack(pady=20, padx=40, fill="both", expand=True)
+
+        # Add widgets
+        self.label = ctk.CTkLabel(
+            master=self.frame,
+            text="Modern GUI with CustomTkinter",
+            font=ctk.CTkFont(size=20, weight="bold")
+        )
+        self.label.pack(pady=20)
+
+        self.button = ctk.CTkButton(
+            master=self.frame,
+            text="Modern Button",
+            command=self.button_callback
+        )
+        self.button.pack(pady=10)
+
+    def button_callback(self):
+        print("Modern button clicked!")
+
+    def run(self):
+        self.root.mainloop()
+
+# Run the application
+if __name__ == "__main__":
+    app = ModernApp()
+    app.run()</pre>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>GUI Framework:
+                    <select id="gui-framework">
+                        <option value="tkinter">Tkinter</option>
+                        <option value="customtkinter">CustomTkinter</option>
+                        <option value="both">Both Examples</option>
+                    </select>
+                </label>
+
+                <label>Include Widgets:
+                    <select id="gui-widgets">
+                        <option value="basic">Basic (Label, Button)</option>
+                        <option value="form">Form Elements</option>
+                        <option value="advanced">Advanced Components</option>
+                    </select>
+                </label>
+
+                <label>Window Title:
+                    <input type="text" id="gui-window-title" value="My Application">
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="gui-code"># GUI code will appear here</pre>
+                <button class="copy-btn" onclick="copyCode('gui-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Python Keyring Section -->
+        <section id="python-keyring" class="component-section">
+            <h2>Python System Keyring</h2>
+
+            <div class="component-preview">
+                <h3>Secure Credential Storage with System Keyring</h3>
+                <p>Safely store and retrieve passwords using the system keyring:</p>
+
+                <pre class="code-block">import keyring
+import getpass
+
+class SecureStorage:
+    def __init__(self, service_name):
+        self.service_name = service_name
+
+    def store_password(self, username, password=None):
+        """Store a password in the system keyring"""
+        if password is None:
+            password = getpass.getpass(f"Enter password for {username}: ")
+
+        keyring.set_password(self.service_name, username, password)
+        print(f"Password stored for {username}")
+
+    def get_password(self, username):
+        """Retrieve a password from the system keyring"""
+        password = keyring.get_password(self.service_name, username)
+        if password is None:
+            print(f"No password found for {username}")
+            return None
+        return password
+
+    def delete_password(self, username):
+        """Delete a password from the system keyring"""
+        try:
+            keyring.delete_password(self.service_name, username)
+            print(f"Password deleted for {username}")
+        except keyring.errors.PasswordDeleteError:
+            print(f"No password found to delete for {username}")
+
+# Example usage
+storage = SecureStorage("MyApp")
+
+# Store a password
+storage.store_password("user@example.com", "secure_password_123")
+
+# Retrieve a password
+retrieved_password = storage.get_password("user@example.com")
+print(f"Retrieved password: {'*' * len(retrieved_password) if retrieved_password else 'None'}")</pre>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Service Name:
+                    <input type="text" id="keyring-service" value="MyApp">
+                </label>
+
+                <label>Include Token Management:
+                    <input type="checkbox" id="keyring-tokens">
+                </label>
+
+                <label>Include Config Storage:
+                    <input type="checkbox" id="keyring-config">
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="keyring-code"># Keyring code will appear here</pre>
+                <button class="copy-btn" onclick="copyCode('keyring-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- Database Section -->
+        <section id="database" class="component-section">
+            <h2>Database Connection & Management</h2>
+
+            <div class="component-preview">
+                <h3>PHP Database Connection</h3>
+                <p>Object-oriented approach for connecting to MySQL database:</p>
+                <pre class="code-block">&lt;?php
+// Database configuration
+$config = new DatabaseConfig('localhost', 'root', '', 'my_database');
+
+// Create connection
+$dbConnection = new DatabaseConnection($config);
+$dbManager = new DatabaseManager($dbConnection);
+
+// Create a table
+$columns = [
+    'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
+    'name' => 'VARCHAR(100) NOT NULL',
+    'email' => 'VARCHAR(100) UNIQUE NOT NULL'
+];
+$dbManager->createTable('users', $columns);
+
+// Insert data
+$userId = $dbManager->insert('users', [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+]);
+
+// Select data
+$users = $dbManager->select('users');
+
+// Update data
+$dbManager->update('users', ['name' => 'Jane Doe'], ['id' => $userId]);
+?&gt;</pre>
+
+                <h3>Additional Utilities</h3>
+                <p>Our library includes additional PHP utilities for:</p>
+                <ul>
+                    <li>Database Migrations</li>
+                    <li>Data Seeding</li>
+                    <li>Database Validation</li>
+                    <li>Backup and Restore</li>
+                </ul>
+
+                <p>Check out our <a href="php_example.php" target="_blank">PHP Example Page</a> to see the components in action.</p>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Server:
+                    <input type="text" id="db-server" value="localhost">
+                </label>
+
+                <label>Username:
+                    <input type="text" id="db-username" value="root">
+                </label>
+
+                <label>Password:
+                    <input type="password" id="db-password" value="">
+                </label>
+
+                <label>Database Name:
+                    <input type="text" id="db-name" value="myDB">
+                </label>
+
+                <label>Table Name:
+                    <input type="text" id="table-name" value="users">
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="db-code">&lt;?php
+// Database configuration
+$config = new DatabaseConfig('localhost', 'root', '', 'myDB');
+
+// Create connection
+$dbConnection = new DatabaseConnection($config);
+$dbManager = new DatabaseManager($dbConnection);
+
+// Create a table
+$columns = [
+    'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
+    'name' => 'VARCHAR(100) NOT NULL',
+    'email' => 'VARCHAR(100) UNIQUE NOT NULL'
+];
+$dbManager->createTable('users', $columns);
+
+// Insert data
+$userId = $dbManager->insert('users', [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+]);
+
+// Select data
+$users = $dbManager->select('users');
+
+// Update data
+$dbManager->update('users', ['name' => 'Jane Doe'], ['id' => $userId]);
+?&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('db-code')">Copy Code</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

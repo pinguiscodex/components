@@ -1,0 +1,30 @@
+# WebDev Components Library - Python Dependencies
+
+# Web Frameworks
+Flask==2.3.3
+Django>=4.2.0
+
+# Security & Cryptography
+bcrypt==4.0.1
+cryptography>=41.0.0
+
+# GUI Libraries
+customtkinter>=5.2.0
+tkinter  # Built-in, but listed for completeness
+
+# System Integration
+keyring>=24.0.0
+pywin32>=227; sys_platform == "win32"  # Windows-specific
+
+# Database (optional - for extended functionality)
+SQLAlchemy>=2.0.0
+psycopg2-binary>=2.9.0  # PostgreSQL
+PyMySQL>=1.0.0  # MySQL
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Linting & Formatting
+black>=23.0.0
+flake8>=6.0.0
