@@ -1427,14 +1427,657 @@ function showCopyFeedback(button) {
     }, 2000);
 }
 
+// PHP Components Code Updates
+function updatePhpCode() {
+    const componentType = document.getElementById('php-component-type').value;
+    const dbHost = document.getElementById('php-db-host').value;
+    const dbUsername = document.getElementById('php-db-username').value;
+    const dbName = document.getElementById('php-db-name').value;
+
+    let code = '';
+
+    switch(componentType) {
+        case 'database':
+            code = `<?php
+/**
+ * WebDev Components Library - PHP Database Components
+ */
+
+// Database Configuration Class
+class DatabaseConfig {
+    private $host;
+    private $username;
+    private $password;
+    private $database;
+    private $port;
+
+    public function __construct($host = '${dbHost}', $username = '${dbUsername}', $password = '', $database = '${dbName}', $port = 3306) {
+        $this->host = $host;
+        $this->username = $username;
+        $this->password = $password;
+        $this->database = $database;
+        $this->port = $port;
+    }
+
+    public function getHost() {
+        return $this->host;
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function getDatabase() {
+        return $this->database;
+    }
+
+    public function getPort() {
+        return $this->port;
+    }
+}
+
+// Database Connection Class
+class DatabaseConnection {
+    private $connection;
+    private $config;
+
+    public function __construct(DatabaseConfig $config) {
+        $this->config = $config;
+        $this->connect();
+    }
+
+    private function connect() {
+        try {
+            $dsn = "mysql:host={$this->config->getHost()};port={$this->config->getPort()};dbname={$this->config->getDatabase()}";
+            $this->connection = new PDO($dsn, $this->config->getUsername(), $this->config->getPassword());
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            throw new Exception("Connection failed: " . $e->getMessage());
+        }
+    }
+
+    public function getConnection() {
+        return $this->connection;
+    }
+
+    public function close() {
+        $this->connection = null;
+    }
+}
+
+// Database Manager Class
+class DatabaseManager {
+    private $connection;
+
+    public function __construct(DatabaseConnection $dbConnection) {
+        $this->connection = $dbConnection->getConnection();
+    }
+
+    // Create a table
+    public function createTable($tableName, $columns) {
+        $columnDefs = [];
+        foreach ($columns as $name => $definition) {
+            $columnDefs[] = "\`{$name}\` {$definition}";
+        }
+        $sql = "CREATE TABLE IF NOT EXISTS \`\{$tableName}\` (" . implode(', ', $columnDefs) . ")";
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error creating table: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Insert data into a table
+    public function insert($tableName, $data) {
+        $columns = array_keys($data);
+        $placeholders = array_map(function($col) { return ":{$col}"; }, $columns);
+
+        $sql = "INSERT INTO \`\{$tableName}\` (\`" . implode('\`, \`', $columns) . "\`) VALUES (" . implode(', ', $placeholders) . ")";
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            $result = $stmt->execute($data);
+            return $this->connection->lastInsertId();
+        } catch (PDOException $e) {
+            error_log("Error inserting data: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Select data from a table
+    public function select($tableName, $conditions = [], $orderBy = '', $limit = '') {
+        $whereClause = '';
+        $params = [];
+
+        if (!empty($conditions)) {
+            $whereParts = [];
+            foreach ($conditions as $column => $value) {
+                $whereParts[] = "\`{$column}\` = :{$column}";
+                $params[$column] = $value;
+            }
+            $whereClause = 'WHERE ' . implode(' AND ', $whereParts);
+        }
+
+        $orderClause = !empty($orderBy) ? "ORDER BY {$orderBy}" : '';
+        $limitClause = !empty($limit) ? "LIMIT {$limit}" : '';
+
+        $sql = "SELECT * FROM \`\{$tableName}\` {$whereClause} {$orderClause} {$limitClause}";
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log("Error selecting data: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Update data in a table
+    public function update($tableName, $data, $conditions) {
+        $setParts = [];
+        $params = [];
+
+        foreach ($data as $column => $value) {
+            $setParts[] = "\`{$column}\` = :{$column}";
+            $params[$column] = $value;
+        }
+
+        $whereParts = [];
+        foreach ($conditions as $column => $value) {
+            $conditionParam = 'cond_' . $column;
+            $whereParts[] = "\`{$column}\` = :{$conditionParam}";
+            $params[$conditionParam] = $value;
+        }
+
+        $sql = "UPDATE \`\{$tableName}\` SET " . implode(', ', $setParts) . " WHERE " . implode(' AND ', $whereParts);
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            return $stmt->execute($params);
+        } catch (PDOException $e) {
+            error_log("Error updating data: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Delete data from a table
+    public function delete($tableName, $conditions) {
+        $whereParts = [];
+        $params = [];
+
+        foreach ($conditions as $column => $value) {
+            $whereParts[] = "\`{$column}\` = :{$column}";
+            $params[$column] = $value;
+        }
+
+        $sql = "DELETE FROM \`\{$tableName}\` WHERE " . implode(' AND ', $whereParts);
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            return $stmt->execute($params);
+        } catch (PDOException $e) {
+            error_log("Error deleting data: " . $e->getMessage());
+            return false;
+        }
+    }
+}
+
+// Example usage:
+try {
+    // Create database configuration
+    $config = new DatabaseConfig('${dbHost}', '${dbUsername}', '', '${dbName}');
+
+    // Create database connection
+    $dbConnection = new DatabaseConnection($config);
+
+    // Create database manager
+    $dbManager = new DatabaseManager($dbConnection);
+
+    // Example: Create a users table
+    $columns = [
+        'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
+        'name' => 'VARCHAR(100) NOT NULL',
+        'email' => 'VARCHAR(100) UNIQUE NOT NULL',
+        'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
+    ];
+
+    $dbManager->createTable('users', $columns);
+
+    // Example: Insert a user
+    $userId = $dbManager->insert('users', [
+        'name' => 'John Doe',
+        'email' => 'john@example.com'
+    ]);
+
+    // Example: Select users
+    $users = $dbManager->select('users');
+
+    // Example: Update a user
+    $dbManager->update('users', ['name' => 'Jane Doe'], ['id' => $userId]);
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+`;
+            break;
+
+        case 'form-handler':
+            code = `<?php
+/**
+ * WebDev Components Library - Form Handler
+ * This file handles form submissions for demonstration purposes
+ */
+
+// Enable CORS for local development
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Handle preflight requests
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    exit();
+}
+
+// Process form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get form data
+    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $message = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+    // Basic validation
+    $errors = [];
+
+    if (empty($name)) {
+        $errors[] = "Name is required";
+    }
+
+    if (empty($email)) {
+        $errors[] = "Email is required";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format";
+    }
+
+    if (empty($message)) {
+        $errors[] = "Message is required";
+    }
+
+    // If no errors, process the form
+    if (empty($errors)) {
+        // In a real application, you would save to database here
+        // For this demo, we'll just return a success response
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Form submitted successfully!',
+            'data' => [
+                'name' => $name,
+                'email' => $email,
+                'message' => $message
+            ]
+        ];
+    } else {
+        $response = [
+            'status' => 'error',
+            'message' => 'Please fix the following errors:',
+            'errors' => $errors
+        ];
+    }
+
+    // Return JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
+}
+
+// If not a POST request, show a simple form for testing
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Handler Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Form Handler Demo</h1>
+        <form id="demoForm" method="post" action="">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('demoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const responseDiv = document.getElementById('response');
+
+                if (data.status === 'success') {
+                    responseDiv.className = 'response success';
+                    responseDiv.innerHTML = '<h3>Success!</h3><p>' + data.message + '</p>';
+                } else {
+                    responseDiv.className = 'response error';
+                    let errorHtml = '<h3>Errors:</h3><ul>';
+                    if (data.errors) {
+                        data.errors.forEach(error => {
+                            errorHtml += '<li>' + error + '</li>';
+                        });
+                    } else {
+                        errorHtml += '<li>' + data.message + '</li>';
+                    }
+                    errorHtml += '</ul>';
+                    responseDiv.innerHTML = errorHtml;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('response').innerHTML = '<div class="response error"><h3>Error</h3><p>An error occurred while submitting the form.</p></div>';
+            });
+        });
+    </script>
+</body>
+</html>
+`;
+            break;
+
+        case 'migration':
+            code = `<?php
+/**
+ * WebDev Components Library - PHP Database Utilities
+ */
+
+// Database Migration Class
+class DatabaseMigration {
+    private $dbManager;
+
+    public function __construct(DatabaseManager $dbManager) {
+        $this->dbManager = $dbManager;
+    }
+
+    // Create migration table
+    public function createMigrationTable() {
+        $columns = [
+            'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
+            'migration_name' => 'VARCHAR(255) NOT NULL UNIQUE',
+            'applied_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
+        ];
+
+        return $this->dbManager->createTable('migrations', $columns);
+    }
+
+    // Run a migration
+    public function runMigration($migrationName, $sql) {
+        try {
+            $this->dbManager->query($sql);
+
+            // Record migration in migrations table
+            $this->dbManager->insert('migrations', [
+                'migration_name' => $migrationName
+            ]);
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Migration failed: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Check if migration has been applied
+    public function hasRun($migrationName) {
+        $results = $this->dbManager->select('migrations', ['migration_name' => $migrationName]);
+        return count($results) > 0;
+    }
+}
+
+// Example usage:
+try {
+    // Assuming you have a database connection and manager set up
+    // $migration = new DatabaseMigration($dbManager);
+    // $migration->createMigrationTable();
+
+    // Example migration
+    // if (!$migration->hasRun('create_users_table')) {
+    //     $sql = "CREATE TABLE users (
+    //         id INT AUTO_INCREMENT PRIMARY KEY,
+    //         name VARCHAR(100) NOT NULL,
+    //         email VARCHAR(100) UNIQUE NOT NULL
+    //     )";
+    //
+    //     $migration->runMigration('create_users_table', $sql);
+    // }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+`;
+            break;
+
+        case 'validation':
+            code = `<?php
+/**
+ * WebDev Components Library - PHP Database Utilities
+ */
+
+// Database Validator Class
+class DatabaseValidator {
+    private $dbManager;
+
+    public function __construct(DatabaseManager $dbManager) {
+        $this->dbManager = $dbManager;
+    }
+
+    // Validate email format
+    public function isValidEmail($email) {
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
+    // Validate required fields
+    public function validateRequired($data, $requiredFields) {
+        $errors = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field]) || empty(trim($data[$field]))) {
+                $errors[] = "{$field} is required";
+            }
+        }
+
+        return $errors;
+    }
+
+    // Validate unique constraint
+    public function validateUnique($tableName, $fieldName, $value, $excludeId = null) {
+        $conditions = [$fieldName => $value];
+
+        if ($excludeId) {
+            $conditions['id != '] = $excludeId; // Note: This is a simplified approach
+        }
+
+        $results = $this->dbManager->select($tableName, $conditions);
+        return count($results) === 0;
+    }
+}
+
+// Example usage:
+try {
+    // Assuming you have a database connection and manager set up
+    // $validator = new DatabaseValidator($dbManager);
+
+    // Example: Validate an email
+    // $isValidEmail = $validator->isValidEmail('test@example.com');
+    // echo $isValidEmail ? 'Valid email' : 'Invalid email';
+
+    // Example: Validate required fields
+    // $data = ['name' => 'John', 'email' => ''];
+    // $required = ['name', 'email'];
+    // $errors = $validator->validateRequired($data, $required);
+    //
+    // if (!empty($errors)) {
+    //     foreach ($errors as $error) {
+    //         echo $error . "\\n";
+    //     }
+    // }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+`;
+            break;
+
+        default:
+            code = `<?php
+// Database configuration
+$config = new DatabaseConfig('${dbHost}', '${dbUsername}', '', '${dbName}');
+
+// Create connection
+$dbConnection = new DatabaseConnection($config);
+$dbManager = new DatabaseManager($dbConnection);
+
+// Create a table
+$columns = [
+    'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
+    'name' => 'VARCHAR(100) NOT NULL',
+    'email' => 'VARCHAR(100) UNIQUE NOT NULL'
+];
+\$dbManager->createTable('users', \$columns);
+
+// Insert data
+\$userId = \$dbManager->insert('users', [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+]);
+
+// Select data
+\$users = \$dbManager->select('users');
+
+// Update data
+\$dbManager->update('users', ['name' => 'Jane Doe'], ['id' => \$userId]);
+?>`;
+    }
+
+    document.getElementById('php-code').textContent = code;
+}
+
+// Add event listeners for PHP component controls
+const phpComponentTypeSelect = document.getElementById('php-component-type');
+const phpDbHostInput = document.getElementById('php-db-host');
+const phpDbUsernameInput = document.getElementById('php-db-username');
+const phpDbNameInput = document.getElementById('php-db-name');
+
+if (phpComponentTypeSelect) phpComponentTypeSelect.addEventListener('change', updatePhpCode);
+if (phpDbHostInput) phpDbHostInput.addEventListener('input', updatePhpCode);
+if (phpDbUsernameInput) phpDbUsernameInput.addEventListener('input', updatePhpCode);
+if (phpDbNameInput) phpDbNameInput.addEventListener('input', updatePhpCode);
+
+// Initialize PHP code
+updatePhpCode();
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        
+
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
-        
+
         window.scrollTo({
             top: targetElement.offsetTop - 70,
             behavior: 'smooth'

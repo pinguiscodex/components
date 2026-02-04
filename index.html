@@ -34,6 +34,7 @@
             <li><a href="#python-gui">GUI Components</a></li>
             <li><a href="#python-keyring">System Keyring</a></li>
             <li><a href="#database">Database</a></li>
+            <li><a href="#php-components">PHP Components</a></li>
         </ul>
     </nav>
 
@@ -1148,6 +1149,261 @@ $users = $dbManager->select('users');
 $dbManager->update('users', ['name' => 'Jane Doe'], ['id' => $userId]);
 ?&gt;</pre>
                 <button class="copy-btn" onclick="copyCode('db-code')">Copy Code</button>
+            </div>
+        </section>
+
+        <!-- PHP Components Section -->
+        <section id="php-components" class="component-section">
+            <h2>PHP Components</h2>
+
+            <div class="component-preview">
+                <h3>PHP Database Components</h3>
+                <p>Comprehensive PHP components for database management:</p>
+
+                <h4>Database Configuration Class</h4>
+                <pre class="code-block">&lt;?php
+class DatabaseConfig {
+    private $host;
+    private $username;
+    private $password;
+    private $database;
+    private $port;
+
+    public function __construct($host = 'localhost', $username = 'root', $password = '', $database = 'webdev_components', $port = 3306) {
+        $this->host = $host;
+        $this->username = $username;
+        $this->password = $password;
+        $this->database = $database;
+        $this->port = $port;
+    }
+
+    // Getters for each property
+    public function getHost() { return $this->host; }
+    public function getUsername() { return $this->username; }
+    public function getPassword() { return $this->password; }
+    public function getDatabase() { return $this->database; }
+    public function getPort() { return $this->port; }
+}
+?&gt;</pre>
+
+                <h4>Database Connection Class</h4>
+                <pre class="code-block">&lt;?php
+class DatabaseConnection {
+    private $connection;
+    private $config;
+
+    public function __construct(DatabaseConfig $config) {
+        $this->config = $config;
+        $this->connect();
+    }
+
+    private function connect() {
+        try {
+            $dsn = "mysql:host={$this->config->getHost()};port={$this->config->getPort()};dbname={$this->config->getDatabase()}";
+            $this->connection = new PDO($dsn, $this->config->getUsername(), $this->config->getPassword());
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            throw new Exception("Connection failed: " . $e->getMessage());
+        }
+    }
+
+    public function getConnection() {
+        return $this->connection;
+    }
+}
+?&gt;</pre>
+
+                <h4>Database Manager Class</h4>
+                <pre class="code-block">&lt;?php
+class DatabaseManager {
+    private $connection;
+
+    public function __construct(DatabaseConnection $dbConnection) {
+        $this->connection = $dbConnection->getConnection();
+    }
+
+    // Create a table
+    public function createTable($tableName, $columns) {
+        $columnDefs = [];
+        foreach ($columns as $name => $definition) {
+            $columnDefs[] = "`{$name}` {$definition}";
+        }
+        $sql = "CREATE TABLE IF NOT EXISTS `{$tableName}` (" . implode(', ', $columnDefs) . ")";
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error creating table: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Insert data into a table
+    public function insert($tableName, $data) {
+        $columns = array_keys($data);
+        $placeholders = array_map(function($col) { return ":{$col}"; }, $columns);
+
+        $sql = "INSERT INTO `{$tableName}` (`" . implode('`, `', $columns) . "`) VALUES (" . implode(', ', $placeholders) . ")";
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            $result = $stmt->execute($data);
+            return $this->connection->lastInsertId();
+        } catch (PDOException $e) {
+            error_log("Error inserting data: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Select data from a table
+    public function select($tableName, $conditions = [], $orderBy = '', $limit = '') {
+        $whereClause = '';
+        $params = [];
+
+        if (!empty($conditions)) {
+            $whereParts = [];
+            foreach ($conditions as $column => $value) {
+                $whereParts[] = "`{$column}` = :{$column}";
+                $params[$column] = $value;
+            }
+            $whereClause = 'WHERE ' . implode(' AND ', $whereParts);
+        }
+
+        $orderClause = !empty($orderBy) ? "ORDER BY {$orderBy}" : '';
+        $limitClause = !empty($limit) ? "LIMIT {$limit}" : '';
+
+        $sql = "SELECT * FROM `{$tableName}` {$whereClause} {$orderClause} {$limitClause}";
+
+        try {
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log("Error selecting data: " . $e->getMessage());
+            return [];
+        }
+    }
+}
+?&gt;</pre>
+
+                <h4>Database Utilities</h4>
+                <p>Our library includes additional PHP utilities for:</p>
+                <ul>
+                    <li>Database Migrations</li>
+                    <li>Data Seeding</li>
+                    <li>Database Validation</li>
+                    <li>Backup and Restore</li>
+                </ul>
+
+                <h4>Form Handler Component</h4>
+                <pre class="code-block">&lt;?php
+/**
+ * WebDev Components Library - Form Handler
+ */
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $message = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+    $errors = [];
+
+    if (empty($name)) {
+        $errors[] = "Name is required";
+    }
+
+    if (empty($email)) {
+        $errors[] = "Email is required";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format";
+    }
+
+    if (empty($message)) {
+        $errors[] = "Message is required";
+    }
+
+    if (empty($errors)) {
+        $response = [
+            'status' => 'success',
+            'message' => 'Form submitted successfully!',
+            'data' => [
+                'name' => $name,
+                'email' => $email,
+                'message' => $message
+            ]
+        ];
+    } else {
+        $response = [
+            'status' => 'error',
+            'message' => 'Please fix the following errors:',
+            'errors' => $errors
+        ];
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
+}
+?&gt;</pre>
+            </div>
+
+            <div class="component-controls">
+                <h3>Customize</h3>
+                <label>Component Type:
+                    <select id="php-component-type">
+                        <option value="database">Database Components</option>
+                        <option value="form-handler">Form Handler</option>
+                        <option value="migration">Migration Utilities</option>
+                        <option value="validation">Validation Utilities</option>
+                    </select>
+                </label>
+
+                <label>Database Host:
+                    <input type="text" id="php-db-host" value="localhost">
+                </label>
+
+                <label>Database Username:
+                    <input type="text" id="php-db-username" value="root">
+                </label>
+
+                <label>Database Name:
+                    <input type="text" id="php-db-name" value="myDB">
+                </label>
+            </div>
+
+            <div class="component-code">
+                <h3>Code</h3>
+                <pre id="php-code">&lt;?php
+// Database configuration
+$config = new DatabaseConfig('localhost', 'root', '', 'myDB');
+
+// Create connection
+$dbConnection = new DatabaseConnection($config);
+$dbManager = new DatabaseManager($dbConnection);
+
+// Create a table
+$columns = [
+    'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
+    'name' => 'VARCHAR(100) NOT NULL',
+    'email' => 'VARCHAR(100) UNIQUE NOT NULL'
+];
+$dbManager->createTable('users', $columns);
+
+// Insert data
+$userId = $dbManager->insert('users', [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+]);
+
+// Select data
+$users = $dbManager->select('users');
+
+// Update data
+$dbManager->update('users', ['name' => 'Jane Doe'], ['id' => $userId]);
+?&gt;</pre>
+                <button class="copy-btn" onclick="copyCode('php-code')">Copy Code</button>
             </div>
         </section>
     </main>
